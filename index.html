@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Trung thu vui vẻ nhé</title>
+    
+    <!-- Meta tags cho SEO và chia sẻ mạng xã hội -->
+    <meta name="description" content="Bạn thật may mắn khi nhận được món quà này. Chúc bạn và gia đình luôn luôn hạnh phúc 🌕✨">
+    <meta name="keywords" content="trung thu, lời chúc, mưa chữ 3D, tình yêu, hạnh phúc, trăng rằm, messenger, facebook">
+    <meta name="author" content="Trung Thu">
+    
+    <!-- Open Graph Meta Tags cho Facebook & Messenger -->
+    <meta property="og:title" content="🌕 Trung thu vui vẻ nhé">
+    <meta property="og:description" content="Bạn thật may mắn khi nhận được món quà này. Chúc bạn và gia đình luôn luôn hạnh phúc 🌕✨">
+    <meta property="og:image" content="https://trung-thu-two.vercel.app/image/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Trung thu vui vẻ nhé - Lời chúc hạnh phúc với mặt trăng và thỏ">
+    <meta property="og:url" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Trung Thu 3D">
+    <meta property="og:locale" content="vi_VN">
+    
+    <!-- Facebook App ID cho Messenger (nếu có) -->
+    <meta property="fb:app_id" content="">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🌕 Trung thu vui vẻ nhé">
+    <meta name="twitter:description" content="Bạn thật may mắn khi nhận được món quà này. Chúc bạn và gia đình luôn luôn hạnh phúc 🌕✨">
+    <meta name="twitter:image" content="https://trung-thu-two.vercel.app/image/og-image.png">
+    <meta name="twitter:image:alt" content="Trung thu vui vẻ nhé - Lời chúc hạnh phúc với mặt trăng và thỏ">
+    
+    <!-- Additional Meta Tags cho Messenger -->
+    <meta property="article:author" content="Trung Thu">
+    <meta property="article:section" content="Lời chúc">
+    <meta property="article:tag" content="trung thu, lời chúc, tình yêu">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff69b4">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <!-- Loading Screen -->
+        <div class="loading-screen" id="loadingScreen">
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Đang tải dữ liệu...</div>
+                <div class="loading-subtitle">Vui lòng chờ trong giây lát</div>
+            </div>
+        </div>
+
+        <!-- Error Screen -->
+        <div class="error-screen" id="errorScreen" style="display: none;">
+            <div class="error-container">
+                <div class="error-icon">⚠️</div>
+                <div class="error-title">Không tìm thấy ID</div>
+                <div class="error-message">Vui lòng kiểm tra lại đường link hoặc liên hệ người gửi</div>
+                <button class="error-button" onclick="location.reload()">Thử lại</button>
+            </div>
+        </div>
+
+        <!-- Background stars -->
+        <div class="stars" id="stars"></div>
+
+        <!-- Audio element -->
+        <audio id="backgroundMusic" loop preload="auto" crossorigin="anonymous">
+            <source src="music/anhnangcuaanh.mp3" type="audio/mpeg">
+            <source src="music/denbenanh.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <!-- Gift container -->
+        <div class="gift-container" id="giftContainer">
+            <img src="gift/rabbits.gif" alt="Gift" class="gift">
+        </div>
+
+        <!-- Gift xuất hiện ở góc trái -->
+        <div class="gift-appear" id="giftAppear">
+            <img src="image/gift.png" alt="Gift" class="gift-image" id="giftImage">
+        </div>
+
+        <!-- Dialog popup -->
+        <div class="dialog-overlay" id="dialogOverlay">
+            <div class="dialog">
+                <p>Chúc bạn một mùa Trung Thu tràn đầy niềm vui, hạnh phúc và may mắn! 🌕✨<br>
+                    Mong rằng những điều tốt đẹp nhất sẽ đến với bạn trong năm nay!
+                    <br>
+                    Đây là món quà của người ấy dành cho bạn 
+                    🐰🌙
+                </p>
+
+                <div class="dialog-image-container">
+                    <img src="image/dialog.png" alt="Dialog Background" class="dialog-background">
+                    <img src="gift/gift.gif" alt="Gift" class="qr-overlay" id="giftImage" style="cursor: pointer;" onerror="this.style.display='none'; console.error('Không thể load ảnh Gift:', this.src);">
+                </div>
+
+                <button onclick="closeDialog()">Đóng</button>
+            </div>
+        </div>
+        <!-- Moon with rabbit - Top right -->
+        <div class="moon-section">
+            <img src="image/moon.png" alt="Trăng Rằm" class="moon">
+            <!-- Music control button -->
+            <div class="music-control" id="musicControl">
+                <button id="playPauseBtn" class="play-pause-btn">
+                    <span id="playIcon">🎵</span>
+                </button>
+            </div>
+            
+        </div>
+
+        <!-- Flying rabbit with ribbons - Middle left -->
+        <div class="flying-rabbit-section">
+            <img src="image/rabbits.png" alt="Thỏ bay" class="flying-rabbit">
+        </div>
+
+        <!-- Traditional woman - Bottom right -->
+        <div class="woman-section">
+            <img src="image/sister.png" alt="Người phụ nữ truyền thống" class="woman">
+        </div>
+
+        <!-- Mountain/Cloud shapes - Bottom -->
+        <div class="mountain-section">
+            <img src="image/mountain.png" alt="Mountain" class="mountain">
+        </div>
+
+        <div class="floating-lanterns">
+            <img src="image/lantern.png" alt="Đèn lồng bay" class="lantern">
+            <img src="image/lantern2.png" alt="Đèn lồng bay" class="lantern">
+            <img src="image/lantern.png" alt="Đèn lồng bay" class="lantern">
+            <img src="image/lantern2.png" alt="Đèn lồng bay" class="lantern">
+            <img src="image/lantern.png" alt="Đèn lồng bay" class="lantern">
+            <img src="image/lantern2.png" alt="Đèn lồng bay" class="lantern">
+        </div>
+
+        <!-- Floating Center Images Section -->
+<!-- Sau 5 hình floating-image gốc -->
+<img class="floating-lantern" src="image/longden2.png" alt="Lồng đèn 2" />
+<!-- Lặp lại 18 lần nữa, luân phiên src -->
+
+        <!-- Password Modal -->
+        <div id="passwordModal" class="modal">
+            <div class="modal-content">
+                <h2>NHAP PASS ĐI NGUOI DEP!</h2>
+                <p>Gợi ý pass là sinh nhật cậu á</p>
+                <div class="passcode-display">----</div>
+                <div class="keypad">
+                    <button class="key" data-value="1">1</button>
+                    <button class="key" data-value="2">2</button>
+                    <button class="key" data-value="3">3</button>
+                    <button class="key" data-value="4">4</button>
+                    <button class="key" data-value="5">5</button>
+                    <button class="key" data-value="6">6</button>
+                    <button class="key" data-value="7">7</button>
+                    <button class="key" data-value="8">8</button>
+                    <button class="key" data-value="9">9</button>
+                    <button class="key" data-value="0">0</button>
+                    <button class="key" data-value="✔">✔</button>
+                    <button class="key" data-value="✖">✖</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./detect-devtools.js"></script>
+    <script type='text/javascript'>
+        // Bypass for developers
+        const keyName = 'key';
+        const keyValue = '9ac7ec230e0e4513578f309d6d3579ad';
+
+        // Handle via config
+        DisableDevtool({
+            tkName: keyName,
+            md5: keyValue,
+            interval: '100',
+        });
+    </script>
+
+    <script>
+        // Global variables để lưu dữ liệu từ API
+        let apiData = null;
+        let currentId = null;
+
+        // Dữ liệu mặc định (thay thế cho API)
+        const defaultData = {
+            images: [], // Không có ảnh mặc định, hoặc thêm nếu cần
+            song: "bongtrang.mp3",
+            senderName: ""
+        };
+
+        // Password handling
+        const correctPasscode = "1234"; // Change the passcode here (4 numbers)
+        let enteredPasscode = "";
+
+        function initPasswordModal() {
+            const modal = document.getElementById('passwordModal');
+            const keys = document.querySelectorAll('.key');
+            const display = document.querySelector('.passcode-display');
+
+            keys.forEach(key => {
+                key.addEventListener('click', () => {
+                    const value = key.getAttribute('data-value');
+                    if (value === '✔') {
+                        if (enteredPasscode === correctPasscode) {
+                            modal.classList.remove('show');
+                            modal.style.display = 'none';
+                            // Resume music or start animations if needed
+                            setupMusicControls();
+                        } else {
+                            enteredPasscode = "";
+                            display.textContent = "----";
+                            // Shake animation or error effect
+                            display.style.animation = 'shake 0.5s ease-in-out';
+                            setTimeout(() => { display.style.animation = ''; }, 500);
+                        }
+                    } else if (value === '✖') {
+                        enteredPasscode = "";
+                        display.textContent = "----";
+                    } else if (value >= '0' && value <= '9' && enteredPasscode.length < 4) {
+                        enteredPasscode += value;
+                        display.textContent = enteredPasscode.replace(/./g, '*') + '-'.repeat(4 - enteredPasscode.length);
+                    }
+                });
+            });
+        }
+
+        // Function để test audio URL
+        async function testAudioUrl(url) {
+            return new Promise((resolve) => {
+                const testAudio = new Audio();
+                testAudio.crossOrigin = 'anonymous';
+                
+                testAudio.addEventListener('canplaythrough', () => {
+                    console.log('Audio URL hợp lệ:', url);
+                    resolve(true);
+                });
+                
+                testAudio.addEventListener('error', () => {
+                    console.log('Audio URL không hợp lệ:', url);
+                    resolve(false);
+                });
+                
+                testAudio.src = url;
+                testAudio.load();
+            });
+        }
+
+        // Function để cập nhật audio source từ API
+        async function updateAudioSource() {
+            if (apiData && apiData.song) {
+                const audio = document.getElementById('backgroundMusic');
+                let audioUrl = apiData.song;
+                
+                // Kiểm tra nếu là URL đầy đủ hay chỉ là tên file
+                if (apiData.song.startsWith('http://') || apiData.song.startsWith('https://')) {
+                    // Test URL trước khi sử dụng
+                    const isValid = await testAudioUrl(apiData.song);
+                    if (isValid) {
+                        audio.src = apiData.song;
+                        console.log('Đã cập nhật audio source từ URL:', apiData.song);
+                    } else {
+                        console.log('URL audio không hợp lệ, sử dụng audio mặc định');
+                        audio.src = 'music/bongtrang.mp3';
+                    }
+                } else {
+                    // Nếu chỉ là tên file, thêm đường dẫn music/
+                    audio.src = `music/${apiData.song}`;
+                    console.log('Đã cập nhật audio source từ file:', apiData.song);
+                }
+                
+                // Load lại audio để áp dụng source mới
+                audio.load();
+            } else {
+                // Sử dụng mặc định nếu không có apiData.song
+                const audio = document.getElementById('backgroundMusic');
+                audio.src = 'music/bongtrang.mp3';
+                audio.load();
+                console.log('Sử dụng audio mặc định');
+            }
+        }
+
+
+        // Function để cập nhật URL ngay lập tức
+        function updateURLImmediately() {
+            const currentUrl = window.location.href;
+            const ogUrl = document.querySelector('meta[property="og:url"]');
+            if (ogUrl) {
+                ogUrl.setAttribute('content', currentUrl);
+                console.log('Đã cập nhật og:url thành:', currentUrl);
+            }
+        }
+
+        // Function để cập nhật meta tags cho chia sẻ mạng xã hội
+        function updateSocialMetaTags() {
+            // Cập nhật URL ngay lập tức (không cần đợi API)
+            updateURLImmediately();
+            
+            if (apiData) {
+                // Cập nhật title và description dựa trên dữ liệu API
+                let customTitle = "Trung thu vui vẻ nhé";
+                let customDescription = "Bạn thật may mắn khi nhận được món quà này. Chúc bạn và gia đình luôn luôn hạnh phúc 🌕✨";
+                
+                // Nếu có tên người gửi, thêm vào title
+                if (apiData.senderName) {
+                    customTitle = `Trung thu vui vẻ nhé - Từ ${apiData.senderName}`;
+                    customDescription = `${apiData.senderName} gửi lời chúc: Bạn thật may mắn khi nhận được món quà này. Chúc bạn và gia đình luôn luôn hạnh phúc 🌕✨`;
+                }
+                
+                // Cập nhật title của trang
+                document.title = customTitle;
+                
+                // Cập nhật meta description
+                const metaDescription = document.querySelector('meta[name="description"]');
+                if (metaDescription) {
+                    metaDescription.setAttribute('content', customDescription);
+                }
+                
+                // Cập nhật Open Graph tags
+                const ogTitle = document.querySelector('meta[property="og:title"]');
+                if (ogTitle) {
+                    ogTitle.setAttribute('content', customTitle);
+                }
+                
+                const ogDescription = document.querySelector('meta[property="og:description"]');
+                if (ogDescription) {
+                    ogDescription.setAttribute('content', customDescription);
+                }
+                
+                // Cập nhật Twitter tags
+                const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+                if (twitterTitle) {
+                    twitterTitle.setAttribute('content', customTitle);
+                }
+                
+                const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+                if (twitterDescription) {
+                    twitterDescription.setAttribute('content', customDescription);
+                }
+                
+                // Sử dụng ảnh tĩnh og-image.png với URL đầy đủ
+                const ogImagePath = 'https://trung-thu-two.vercel.app/image/og-image.png';
+                const ogImageMeta = document.querySelector('meta[property="og:image"]');
+                if (ogImageMeta) {
+                    ogImageMeta.setAttribute('content', ogImagePath);
+                }
+                
+                const twitterImageMeta = document.querySelector('meta[name="twitter:image"]');
+                if (twitterImageMeta) {
+                    twitterImageMeta.setAttribute('content', ogImagePath);
+                }
+                
+                console.log('Đã cập nhật meta tags cho chia sẻ mạng xã hội với ảnh og-image.png');
+            }
+        }
+
+        // Function để hiển thị gift và thỏ
+        function showGiftAndRabbit() {
+            console.log('Hiển thị gift và thỏ');
+            
+            // Hiển thị lại các element
+            const giftContainer = document.getElementById('giftContainer');
+            const giftAppear = document.getElementById('giftAppear');
+            
+            if (giftContainer) {
+                giftContainer.style.display = 'block';
+            }
+            if (giftAppear) {
+                giftAppear.style.display = 'block';
+            }
+            
+            // Bắt đầu animation
+            startGiftAnimation();
+        }
+
+        // Function để ẩn gift và thỏ
+        function hideGiftAndRabbit() {
+            console.log('Ẩn gift và thỏ vì không có linkQR');
+            
+            // Ẩn gift container (thỏ chạy)
+            const giftContainer = document.getElementById('giftContainer');
+            if (giftContainer) {
+                giftContainer.style.display = 'none';
+            }
+            
+            // Ẩn gift appear (gift ở góc trái)
+            const giftAppear = document.getElementById('giftAppear');
+            if (giftAppear) {
+                giftAppear.style.display = 'none';
+            }
+        }
+
+        // Function để hiển thị loading screen
+        function showLoading() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const errorScreen = document.getElementById('errorScreen');
+            loadingScreen.style.display = 'flex';
+            errorScreen.style.display = 'none';
+        }
+
+        // Function để ẩn loading screen
+        function hideLoading() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        }
+
+        // Function để hiển thị error screen
+        function showError() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const errorScreen = document.getElementById('errorScreen');
+            loadingScreen.style.display = 'none';
+            errorScreen.style.display = 'flex';
+        }
+
+        // Function để khởi tạo dữ liệu (bỏ kiểm tra ID, luôn sử dụng default)
+        async function initializeData() {
+            showLoading();
+            
+            // Bỏ lấy ID và fetch API, luôn sử dụng default data
+            apiData = defaultData;
+            console.log('Sử dụng dữ liệu mặc định');
+            
+            // Cập nhật các thành phần từ dữ liệu mặc định
+            await updateAudioSource();
+            updateSocialMetaTags(); // Cập nhật meta tags cho chia sẻ
+            hideGiftAndRabbit();
+            console.log('Đã tải thành công dữ liệu mặc định');
+            hideLoading();
+            
+            // Show password modal after loading
+            setTimeout(() => {
+                const modal = document.getElementById('passwordModal');
+                modal.style.display = 'flex';
+                modal.classList.add('show');
+                initPasswordModal();
+            }, 1000);
+            
+            return true;
+        }
+
+        // Function để hiển thị thông báo lỗi
+        function showErrorMessage(message) {
+            // Tạo thông báo tạm thời
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: rgba(255, 0, 0, 0.8);
+                color: white;
+                padding: 10px 15px;
+                border-radius: 5px;
+                z-index: 10000;
+                font-size: 14px;
+                max-width: 300px;
+            `;
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            
+            // Tự động ẩn sau 5 giây
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.parentNode.removeChild(errorDiv);
+                }
+            }, 5000);
+        }
+
+        // Create floating stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 80;
+
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 2 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Initialize stars when page loads
+        window.addEventListener('load', createStars);
+
+        // Dialog functions
+        function showDialog() {
+            const dialogOverlay = document.getElementById('dialogOverlay');
+            dialogOverlay.classList.add('show');
+        }
+
+        function closeDialog() {
+            const dialogOverlay = document.getElementById('dialogOverlay');
+            dialogOverlay.classList.remove('show');
+        }
+
+        // Add click event to gift image
+        document.addEventListener('DOMContentLoaded', function () {
+            // Cập nhật URL ngay khi DOM ready để Messenger có thể đọc
+            updateURLImmediately();
+            
+            // Click vào gift trong dialog để mở link quà tặng (nhưng không có link, chỉ alert)
+            const dialogGiftImage = document.querySelector('.qr-overlay');
+            if (dialogGiftImage) {
+                dialogGiftImage.addEventListener('click', function() {
+                    console.log('Chưa có link quà tặng từ backend');
+                    // Có thể hiển thị thông báo cho user
+                    alert('Chưa có link quà tặng từ người gửi');
+                });
+            }
+        });
+
+        // Music control functions
+        function setupMusicControls() {
+            const audio = document.getElementById('backgroundMusic');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const playIcon = document.getElementById('playIcon');
+            let isPlaying = false;
+
+            // Set volume to 50% for better user experience
+            audio.volume = 0.5;
+
+            // Play/Pause button click handler
+            playPauseBtn.addEventListener('click', function() {
+                if (isPlaying) {
+                    audio.pause();
+                    playIcon.textContent = '🎵';
+                    playIcon.style.opacity = '0.7';
+                } else {
+                    audio.play().then(() => {
+                        playIcon.textContent = '⏸️';
+                        playIcon.style.opacity = '1';
+                    }).catch(error => {
+                        console.log('Audio play failed:', error);
+                        // Fallback: show play button even if audio fails
+                        playIcon.textContent = '🎵';
+                    });
+                }
+                isPlaying = !isPlaying;
+            });
+
+            // Auto-play on mobile after user interaction
+            function enableAutoPlay() {
+                // Try to play audio after user interaction
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playIcon.textContent = '⏸️';
+                    playIcon.style.opacity = '1';
+                }).catch(error => {
+                    console.log('Auto-play failed:', error);
+                });
+            }
+
+            // Enable auto-play after first user interaction
+            let hasInteracted = false;
+            document.addEventListener('click', function() {
+                if (!hasInteracted) {
+                    hasInteracted = true;
+                    enableAutoPlay();
+                }
+            }, { once: true });
+
+            // Handle audio events
+            audio.addEventListener('ended', function() {
+                isPlaying = false;
+                playIcon.textContent = '🎵';
+                playIcon.style.opacity = '0.7';
+            });
+
+            audio.addEventListener('error', function() {
+                console.log('Audio error occurred');
+                playIcon.textContent = '🔇';
+                playIcon.style.opacity = '0.5';
+            });
+        }
+
+
+        // Gift animation - chỉ chạy khi có linkQR hợp lệ
+        function startGiftAnimation() {
+            console.log('Không có linkQR, bỏ qua animation gift');
+            return;
+        }
+
+        // Khởi tạo dữ liệu khi trang load
+        window.addEventListener('load', async function() {
+            // Cập nhật URL ngay lập tức để Messenger có thể đọc đúng
+            updateSocialMetaTags();
+            
+            const success = await initializeData();
+        });
+
+        // handle resize
+        window.addEventListener('resize', () => {
+            // Có thể thêm logic resize nếu cần
+        });
+    </script>
+</body>
+
+</html>

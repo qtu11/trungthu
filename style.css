@@ -1,0 +1,1455 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background: black;
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000000 0%, #0d0e10 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease-out;
+}
+
+.loading-container {
+    text-align: center;
+    color: white;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.loading-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Dancing Script', cursive;
+    animation: fadeInOut 2s ease-in-out infinite;
+}
+
+.loading-subtitle {
+    font-size: 16px;
+    opacity: 0.8;
+    font-family: Arial, sans-serif;
+    animation: fadeInOut 2s ease-in-out infinite 0.5s;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error Screen */
+.error-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f9d1d1 0%, #3e3636 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.error-container {
+    text-align: center;
+    color: white;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.error-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+}
+
+.error-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-family: 'Dancing Script', cursive;
+}
+
+.error-message {
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+    opacity: 0.9;
+    font-family: Arial, sans-serif;
+}
+
+.error-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: Arial, sans-serif;
+}
+
+.error-button:hover {
+    background: white;
+    color: #ff6b6b;
+    transform: translateY(-2px);
+}
+
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
+canvas {
+    display: block;
+}
+
+/* Background stars */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Gift animation */
+.gift-container {
+    position: fixed;
+    top: 10%;
+    right: -200px;
+    /* Bắt đầu từ bên phải ngoài màn hình */
+    transform: translateY(-50%);
+    z-index: 15;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.gift {
+    width: 150px;
+    height: 150px;
+    animation: giftFloat 3s ease-in-out infinite;
+}
+
+.gift-container.show {
+    opacity: 1;
+    animation: giftMove 8s linear forwards;
+}
+
+/* Gift xuất hiện ở góc trái */
+.gift-appear {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 20;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.5s ease-in-out;
+}
+
+.gift-appear.show {
+    opacity: 1;
+    transform: scale(1);
+    animation: giftPulse 2s ease-in-out infinite;
+}
+
+.gift-image {
+    width: 100px;
+    height: 100px;
+}
+
+@keyframes giftMove {
+    0% {
+        right: -200px;
+    }
+
+    100% {
+        right: calc(100% + 200px);
+    }
+}
+
+@keyframes giftFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes giftPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Dialog popup */
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.dialog-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    border: 3px solid #fff;
+    animation: dialogFloat 4s ease-in-out infinite;
+}
+
+@keyframes dialogFloat {
+    0%, 100% { transform: translate(-50%, -50%) scale(1) translateY(0px); }
+    50% { transform: translate(-50%, -50%) scale(1) translateY(-5px); }
+}
+
+.dialog-overlay.show .dialog {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.dialog h2 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 28px;
+    font-family: 'Dancing Script', cursive;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dialog p {
+    color: #fff;
+    font-size: 20px;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.dialog button {
+    background: #fff;
+    color: #ff6b6b;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-family: 'Dancing Script', cursive;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dialog button:hover {
+    background: #ff6b6b;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Container cho ảnh dialog với QR */
+.dialog-image-container {
+    position: relative;
+    width: 550px;
+    height: 500px;
+    margin: 10px auto;
+    display: block;
+}
+
+.dialog-background {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    animation: imageFloat 3s ease-in-out infinite;
+}
+
+@keyframes imageFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
+}
+
+.qr-overlay {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    image-rendering: auto;
+    animation-play-state: running;
+    animation: qrPulse 2s ease-in-out infinite;
+}
+
+@keyframes qrPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.05); }
+}
+
+
+.star {
+    position: absolute;
+    background: #ffd700;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+
+/* Moon with rabbit - Top right */
+.moon-section {
+    position: fixed;
+    top: 1%;
+    right: 1%;
+    z-index: 10;
+}
+
+.moon {
+    width: 200px;
+    height: 200px;
+    animation: moon-glow 4s ease-in-out infinite, floatHover 6s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+}
+
+@keyframes moon-glow {
+
+    0%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+    }
+
+    50% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 40px rgba(255, 215, 0, 1));
+    }
+}
+
+@keyframes floatHover {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Music control button */
+.music-control {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+}
+
+.play-pause-btn {
+    background: none;
+    border: 3px solid #edcb50;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    animation: buttonFloat 5s ease-in-out infinite;
+}
+
+@keyframes buttonFloat {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+    50% { transform: translate(-50%, -50%) translateY(-5px); }
+}
+
+.play-pause-btn:hover {
+    background: rgba(255, 215, 0, 1);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.play-pause-btn:active {
+    transform: scale(0.95);
+}
+
+#playIcon {
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+
+/* Floating lanterns */
+.floating-lanterns {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.lantern {
+    position: absolute;
+    width: 180px;
+    height: auto;
+    bottom: -100px;
+    animation: float-up 8s linear infinite, lanternSway 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.6));
+}
+
+@keyframes lanternSway {
+    0%, 100% { transform: translateX(0px) rotate(0deg); }
+    50% { transform: translateX(5px) rotate(2deg); }
+}
+
+.lantern:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s, 1s;
+}
+
+.lantern:nth-child(2) {
+    left: 20%;
+    animation-delay: 2s, 1.5s;
+}
+
+.lantern:nth-child(3) {
+    left: 30%;
+    animation-delay: 4s, 2s;
+}
+
+.lantern:nth-child(4) {
+    left: 60%;
+    animation-delay: 1s, 2.5s;
+}
+
+.lantern:nth-child(5) {
+    left: 70%;
+    animation-delay: 3s, 3s;
+}
+
+.lantern:nth-child(6) {
+    left: 80%;
+    animation-delay: 5s, 3.5s;
+}
+
+@keyframes float-up {
+    0% {
+        bottom: -100px;
+        opacity: 0;
+        transform: translateX(0px) rotate(0deg);
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        bottom: 100vh;
+        opacity: 0;
+        transform: translateX(20px) rotate(5deg);
+    }
+}
+
+/* Flying rabbit with ribbons - Middle left */
+.flying-rabbit-section {
+    position: fixed;
+    top: 30%;
+    left: 0;
+    z-index: 8;
+}
+
+.flying-rabbit {
+    width: 380px;
+    height: 380px;
+    animation: fly-around 6s ease-in-out infinite, rabbitFloat 5s ease-in-out infinite;
+}
+
+@keyframes fly-around {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(20px, -20px) rotate(5deg);
+    }
+
+    50% {
+        transform: translate(-10px, -30px) rotate(-5deg);
+    }
+
+    75% {
+        transform: translate(-20px, -10px) rotate(3deg);
+    }
+}
+
+@keyframes rabbitFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+}
+
+/* Traditional woman - Bottom right */
+.woman-section {
+    position: fixed;
+    bottom: 10%;
+    right: -1%;
+    z-index: 7;
+}
+
+.woman {
+    width: 500px;
+    height: auto;
+    animation: gentle-sway 4s ease-in-out infinite, womanFloat 7s ease-in-out infinite;
+}
+
+@keyframes gentle-sway {
+
+    0%,
+    100% {
+        transform: rotate(-1deg);
+    }
+
+    50% {
+        transform: rotate(1deg);
+    }
+}
+
+@keyframes womanFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.mountain-section {
+    position: fixed;
+    bottom: -30px;
+    left: -200px;
+    z-index: 6;
+}
+
+.mountain {
+    width: 120vw;
+    height: 40vh;
+    animation: mountainSway 10s ease-in-out infinite;
+}
+
+@keyframes mountainSway {
+    0%, 100% { transform: translateX(0px); }
+    50% { transform: translateX(5px); }
+}
+
+
+.flying-rabbit-section,
+.woman-section,
+.mountain-section,
+.floating-lanterns {
+    pointer-events: none;
+}
+
+/* Floating Center Images Section - Merged and cleaned */
+.floating-center-section {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 30%, #000010 0%, #000 100%);
+    z-index: 9;
+    pointer-events: none;
+}
+
+.floating-image {
+    position: absolute;
+    width: auto;
+    height: auto;
+    opacity: 0.9;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    animation: float 6s ease-in-out infinite;
+    pointer-events: all; /* Enable hover */
+}
+
+.floating-image:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+    z-index: 11;
+}
+
+/* Base float animation */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+/* Specific positioning and styles for each image */
+.floating-image[data-index="1"] { /* dialog.png - Center top, most prominent */
+    top: 15%;
+    left: 35%;
+    max-width: 250px;
+    max-height: 250px;
+    z-index: 12;
+    animation-delay: 0s;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.floating-image[data-index="2"] { /* ongtrang.png - Top right, golden glow */
+    top: 10%;
+    right: 5%;
+    max-width: 180px;
+    max-height: 180px;
+    animation: float 5s ease-in-out infinite;
+    animation-delay: 1s;
+    filter: drop-shadow(0 0 20px #FFD700) drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
+}
+
+.floating-image[data-index="3"] { /* cungtrang.png - Center leftish, larger */
+    top: 45%;
+    left: 15%;
+    max-width: 300px;
+    max-height: 300px;
+    animation: float 7s ease-in-out infinite;
+    animation-delay: 2s;
+    filter: drop-shadow(0 0 15px rgba(255, 193, 7, 0.4));
+}
+
+.floating-image[data-index="4"] { /* longden1.png - Mid right, swaying */
+    top: 35%;
+    right: 15%;
+    max-width: 200px;
+    max-height: 200px;
+    animation: float 8s ease-in-out infinite, sway 4s ease-in-out infinite;
+    animation-delay: 3s, 0s;
+    filter: drop-shadow(0 0 12px rgba(255, 140, 0, 0.5));
+}
+
+@keyframes sway {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+}
+
+.floating-image[data-index="5"] { /* longden2.png - Bottom right, tilted, orange glow */
+    bottom: 15%;
+    right: 10%;
+    max-width: 160px;
+    max-height: 160px;
+    transform: rotate(-2deg);
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 4s;
+    filter: drop-shadow(0 0 15px #FFA500) drop-shadow(0 0 25px rgba(255, 165, 0, 0.4));
+}
+
+/* Multiple floating lanterns - Enhanced visibility */
+.floating-lantern {
+    position: absolute;
+    width: auto;
+    height: auto;
+    opacity: 1; /* Full opacity for better visibility */
+    filter: drop-shadow(0 0 20px rgba(255, 140, 0, 1)) drop-shadow(0 0 30px rgba(255, 165, 0, 0.6)); /* Stronger glow */
+    transition: transform 0.3s ease, filter 0.3s ease;
+    animation: lanternFloat 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.floating-lantern:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 30px rgba(255, 140, 0, 1)) drop-shadow(0 0 40px rgba(255, 165, 0, 0.8));
+}
+
+@keyframes lanternFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+/* Positions for lanterns (nth-child starting from 6, assuming 5 floating-images first) */
+.floating-center-section .floating-lantern:nth-child(6) {  
+    top: 17.39894316057523%;
+    left: 47.53135017161517%;
+    max-width: 121.2431609944675px;
+    max-height: 93.6324836284351px;
+    animation-delay: 0.8s;
+    animation-duration: 7.0s;
+    transform: rotate(1.1939113926331748deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(7) {  
+    top: 55.5729169800089%;
+    left: 47.82814946432585%;
+    max-width: 82.29265743814703px;
+    max-height: 84.54515373905882px;
+    animation-delay: 0.2s;
+    animation-duration: 9.3s;
+    transform: rotate(0.894253515818809deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(8) {  
+    top: 75.30162966560346%;
+    left: 33.53003057640389%;
+    max-width: 131.33089380463343px;
+    max-height: 129.32044080829337px;
+    animation-delay: 5.1s;
+    animation-duration: 8.8s;
+    transform: rotate(-0.8846957398948554deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(9) {  
+    top: 46.23076563396077%;
+    left: 15.885772633992792%;
+    max-width: 107.89961276145311px;
+    max-height: 84.32039246507973px;
+    animation-delay: 1.8s;
+    animation-duration: 7.4s;
+    transform: rotate(1.8447783487790304deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(10) {  
+    top: 21.716295036635344%;
+    left: 62.81218356306291%;
+    max-width: 93.05340049905362px;
+    max-height: 85.5894632773685px;
+    animation-delay: 7.1s;
+    animation-duration: 9.1s;
+    transform: rotate(4.815423784520235deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(11) {  
+    top: 43.318149065324086%;
+    left: 24.427131820036667%;
+    max-width: 81.68233354413746px;
+    max-height: 89.70541825479268px;
+    animation-delay: 2.2s;
+    animation-duration: 7.1s;
+    transform: rotate(1.7322574608084187deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(12) {  
+    top: 14.44004322026717%;
+    left: 85.41006489012781%;
+    max-width: 103.3745541137991px;
+    max-height: 120.76614151441055px;
+    animation-delay: 1.8s;
+    animation-duration: 7.5s;
+    transform: rotate(-0.17615901369953058deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(13) {  
+    top: 17.024170680893143%;
+    left: 57.273626702579335%;
+    max-width: 118.55854703620524px;
+    max-height: 119.46916589570831px;
+    animation-delay: 0.1s;
+    animation-duration: 7.3s;
+    transform: rotate(0.6168276940474451deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(14) {  
+    top: 28.37175475587653%;
+    left: 27.629165072525215%;
+    max-width: 108.80451312756233px;
+    max-height: 117.36864454023059px;
+    animation-delay: 4.4s;
+    animation-duration: 7.1s;
+    transform: rotate(0.750047135634178deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(15) {  
+    top: 83.20170249967516%;
+    left: 36.76583093746671%;
+    max-width: 134.9979186870545px;
+    max-height: 101.36141718168525px;
+    animation-delay: 3.4s;
+    animation-duration: 8.6s;
+    transform: rotate(3.886421005462683deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(16) {  
+    top: 87.04192108068759%;
+    left: 36.16950385278625%;
+    max-width: 92.2223923328585px;
+    max-height: 122.60944364571878px;
+    animation-delay: 6.6s;
+    animation-duration: 9.8s;
+    transform: rotate(0.8425550738772545deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(17) {  
+    top: 65.83735467217438%;
+    left: 66.50791988570134%;
+    max-width: 112.97574126436356px;
+    max-height: 106.4432306725459px;
+    animation-delay: 2.0s;
+    animation-duration: 6.8s;
+    transform: rotate(0.7893189288392239deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(18) {  
+    top: 81.68331278922417%;
+    left: 81.97208620520202%;
+    max-width: 129.80733775304867px;
+    max-height: 112.2559619522785px;
+    animation-delay: 3.8s;
+    animation-duration: 8.2s;
+    transform: rotate(0.87107301777983deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(19) {  
+    top: 60.34634174960381%;
+    left: 74.87938958127228%;
+    max-width: 136.55300309870853px;
+    max-height: 88.8483893098527px;
+    animation-delay: 2.3s;
+    animation-duration: 7.7s;
+    transform: rotate(-1.7935895686259498deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(20) {  
+    top: 69.09244289226442%;
+    left: 29.565218458815615%;
+    max-width: 132.929984308872px;
+    max-height: 102.59209628400971px;
+    animation-delay: 3.1s;
+    animation-duration: 6.1s;
+    transform: rotate(0.3268735875140747deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(21) {  
+    top: 56.377753578936705%;
+    left: 20.36188453192014%;
+    max-width: 103.40015515513454px;
+    max-height: 88.04352373602593px;
+    animation-delay: 1.0s;
+    animation-duration: 7.4s;
+    transform: rotate(1.6255966360911343deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(22) {  
+    top: 36.35342858914487%;
+    left: 62.240574605908925%;
+    max-width: 145.2002011752346px;
+    max-height: 146.31002042998253px;
+    animation-delay: 6.7s;
+    animation-duration: 6.7s;
+    transform: rotate(-2.560261216704496deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(23) {  
+    top: 84.74566099874595%;
+    left: 64.94902998766439%;
+    max-width: 125.82097559135316px;
+    max-height: 126.63103309980005px;
+    animation-delay: 6.8s;
+    animation-duration: 6.4s;
+    transform: rotate(-1.0400487136151915deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(24) {  
+    top: 19.04231532486395%;
+    left: 45.04892448794514%;
+    max-width: 133.82438247724915px;
+    max-height: 99.87559147898386px;
+    animation-delay: 5.2s;
+    animation-duration: 7.4s;
+    transform: rotate(3.5709408789088837deg);
+}
+
+.floating-center-section .floating-lantern:nth-child(25) {  
+    top: 38.50772149551246%;
+    left: 42.129974961364454%;
+    max-width: 122.87750991450201px;
+    max-height: 92.41242474425033px;
+    animation-delay: 2.3s;
+    animation-duration: 6.4s;
+    transform: rotate(3.820346536284333deg);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+
+    /* Moon section - thu nhỏ và điều chỉnh vị trí */
+    .moon-section {
+        position: fixed;
+        top: 2%;
+        right: 2%;
+    }
+
+    .moon {
+        width: 120px;
+        height: 120px;
+    }
+
+    /* Music control button - mobile */
+    .play-pause-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    /* Flying rabbit - thu nhỏ và điều chỉnh */
+    .flying-rabbit-section {
+        position: fixed;
+        top: 65%;
+        left: -10%;
+    }
+
+    .flying-rabbit {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* Woman section - thu nhỏ và điều chỉnh vị trí */
+    .woman-section {
+        position: fixed;
+        bottom: 5%;
+        right: -17%;
+    }
+
+    .woman {
+        width: 300px;
+        height: auto;
+    }
+
+    /* Mountain - thu nhỏ và điều chỉnh */
+    .mountain-section {
+        left: -10px;
+    }
+
+    .mountain {
+        width: 120vw;
+        height: 22vh;
+    }
+
+    /* Lanterns - thu nhỏ */
+    .lantern {
+        width: 100px;
+        height: auto;
+        max-width: 120px;
+    }
+
+    /* Floating images responsive */
+    .floating-image {
+        opacity: 0.8;
+    }
+
+    .floating-image[data-index="1"] {
+        top: 10%;
+        left: 25%;
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    .floating-image[data-index="2"] {
+        top: 5%;
+        right: 2%;
+        max-width: 120px;
+        max-height: 120px;
+    }
+
+    .floating-image[data-index="3"] {
+        top: 40%;
+        left: 5%;
+        max-width: 180px;
+        max-height: 180px;
+    }
+
+    .floating-image[data-index="4"] {
+        top: 30%;
+        right: 5%;
+        max-width: 130px;
+        max-height: 130px;
+    }
+
+    .floating-image[data-index="5"] {
+        bottom: 10%;
+        right: 5%;
+        max-width: 110px;
+        max-height: 110px;
+    }
+
+    /* Reduce animation intensity on mobile for float */
+    .floating-image {
+        animation-duration: 4s;
+    }
+
+    /* Dialog - mobile responsive */
+    .dialog {
+        max-width: 90vw;
+        padding: 8px;
+        margin: 10px;
+        border-radius: 15px;
+    }
+
+    .dialog h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .dialog p {
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+
+    .dialog button {
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 20px;
+    }
+
+    .dialog-image-container {
+        width: 80vw;
+        height: 40vh;
+        margin: 5px auto;
+    }
+
+    .qr-overlay {
+        width: 120px;
+        height: 120px;
+        top: 40%;
+    }
+
+    /* Lanterns responsive */
+    .floating-lantern {
+        max-width: 80px !important;
+        max-height: 80px !important;
+        opacity: 0.9;
+        filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.8));
+        animation-duration: 6s;
+    }
+
+}
+
+/* Extra small mobile responsive */
+@media (max-width: 480px) {
+    .dialog {
+        max-width: 95vw;
+        padding: 6px;
+        margin: 5px;
+        border-radius: 12px;
+    }
+
+    .dialog h2 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .dialog p {
+        font-size: 12px;
+        line-height: 1.3;
+        margin-bottom: 12px;
+    }
+
+    .dialog button {
+        padding: 8px 16px;
+        font-size: 12px;
+        border-radius: 18px;
+    }
+
+    .dialog-image-container {
+        width: 85vw;
+        height: 35vh;
+        margin: 3px auto;
+    }
+
+    .qr-overlay {
+        width: 100px;
+        height: 100px;
+        top: 40%;
+    }
+
+    /* Floating images extra small */
+    .floating-image[data-index="1"] {
+        max-width: 120px;
+        max-height: 120px;
+    }
+
+    .floating-image[data-index="2"] {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .floating-image[data-index="3"] {
+        max-width: 140px;
+        max-height: 140px;
+    }
+
+    .floating-image[data-index="4"] {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .floating-image[data-index="5"] {
+        max-width: 90px;
+        max-height: 90px;
+    }
+
+    .floating-lantern {
+        max-width: 60px !important;
+        max-height: 60px !important;
+        opacity: 0.85;
+        filter: drop-shadow(0 0 12px rgba(255, 140, 0, 0.7));
+    }
+}
+
+/* Tablet Responsive */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .mountain-section {
+        left: -10px;
+    }
+
+    .moon {
+        width: 260px;
+        height: 260px;
+    }
+
+    /* Music control button - tablet */
+    .play-pause-btn {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+    }
+
+    .flying-rabbit-section {
+        position: fixed;
+        top: 65%;
+        left: -10%;
+    }
+
+    .flying-rabbit {
+        width: 500px;
+        height: 500px;
+    }
+
+    .woman-section {
+        position: fixed;
+        bottom: 5%;
+        right: -17%;
+    }
+
+    .woman {
+        width: 700px;
+        height: auto;
+    }
+
+    .mountain {
+        width: 110vw;
+        height: 22vh;
+    }
+
+    .dialog {
+        max-width: 95vw;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .dialog-image-container {
+        width: 85vw;
+        height: 65vh;
+    }
+
+    .qr-overlay {
+        width: 55vw;
+        height: 45vw;
+    }
+
+    .dialog p {
+        font-size: 28px;
+        font-family: 'Dancing Script', cursive;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .dialog button {
+        padding: 15px 30px;
+        font-size: 20px;
+        font-family: 'Dancing Script', cursive;
+    }
+
+    .gift-container {
+        top: 7%;
+    }
+
+    .gift {
+        width: 180px;
+        height: 180px;
+    }
+
+    .gift-appear {
+        top: 30px;
+        left: 20px;
+
+    }
+
+    .gift-image {
+        width: 170px;
+        height: 170px;
+    }
+}
+
+/* Password Modal Styles - Trung Thu Theme */
+#wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    animation: fadeInModal 0.5s ease-out;
+}
+
+.modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d, #ff69b4);
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    border: 4px solid #fff;
+    animation: bounceIn 0.6s ease-out, modalFloat 4s ease-in-out infinite;
+    max-width: 400px;
+    width: 90%;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes modalFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+.modal-content::before {
+    content: '🌕';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    animation: moonGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes moonGlow {
+    from { text-shadow: 0 0 10px #ffd700; }
+    to { text-shadow: 0 0 20px #ffd700, 0 0 30px #ff69b4; }
+}
+
+.modal-content h2 {
+    color: #fff;
+    font-family: 'Dancing Script', cursive;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: textGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+    from { text-shadow: 0 0 5px #fff; }
+    to { text-shadow: 0 0 15px #fff, 0 0 20px #ff69b4; }
+}
+
+.passcode-display {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff69b4;
+    font-family: 'Dancing Script', cursive;
+    letter-spacing: 10px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 240px;
+    margin: 0 auto;
+}
+
+.key {
+    background: linear-gradient(135deg, #fff, #ffd93d);
+    border: 2px solid #ff69b4;
+    border-radius: 15px;
+    padding: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Dancing Script', cursive;
+    color: #ff69b4;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+    animation: keyFloat 3s ease-in-out infinite;
+}
+
+@keyframes keyFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-2px); }
+}
+
+.key::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transition: left 0.5s;
+}
+
+.key:hover::before {
+    left: 100%;
+}
+
+.key:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
+    background: linear-gradient(135deg, #ffd93d, #ff6b6b);
+    color: #fff;
+}
+
+.key:active {
+    transform: scale(0.95);
+}
+
+.key[data-value="✔"], .key[data-value="✖"] {
+    background: linear-gradient(135deg, #ff6b6b, #ff69b4);
+    color: #fff;
+    grid-column: span 1.5;
+}
+
+.key[data-value="0"] {
+    grid-column: span 3;
+}
+
+/* Mobile Responsive for Modal */
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .modal-content h2 {
+        font-size: 24px;
+    }
+
+    .passcode-display {
+        font-size: 20px;
+        letter-spacing: 5px;
+    }
+
+    .key {
+        padding: 15px;
+        font-size: 20px;
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Title styling if any (for future use) */
+h1, h2, h3 {
+    color: white;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
